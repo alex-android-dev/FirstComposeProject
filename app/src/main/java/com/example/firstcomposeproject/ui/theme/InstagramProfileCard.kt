@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -82,7 +83,8 @@ fun InstagramHead(posts: String, followers: String, following: String) {
 private fun InstagramLogo() {
     Image(
         modifier = Modifier
-            .size(50.dp),
+            .size(50.dp)
+            .padding(5.dp),
         painter = painterResource(R.drawable.instagram_1_svgrepo_com),
         contentDescription = "App icon",
     )
