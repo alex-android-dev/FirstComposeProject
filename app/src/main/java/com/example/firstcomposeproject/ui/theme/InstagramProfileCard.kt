@@ -20,9 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.firstcomposeproject.R
+import java.nio.file.WatchEvent
 
 const val postsName = "Posts"
 const val followersName = "Followers"
@@ -55,13 +59,13 @@ fun InstagramCard(posts: String, followers: String, following: String) {
             contentColor = MaterialTheme.colorScheme.onBackground,
         )
     ) {
-        InstagramHead(posts, followers, following)
+        UserStatistics(posts, followers, following)
     }
 }
 
 
 @Composable
-fun InstagramHead(posts: String, followers: String, following: String) {
+fun UserStatistics(posts: String, followers: String, following: String) {
     val postsName = "Posts"
     val followersName = "Followers"
     val followingName = "Following"
@@ -80,39 +84,32 @@ fun InstagramHead(posts: String, followers: String, following: String) {
 
 @Composable
 private fun InstagramLogo() {
-    Column(
-        modifier = Modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            modifier = Modifier.size(50.dp),
-            painter = painterResource(R.drawable.instagram_1_svgrepo_com),
-            contentDescription = "App icon"
-        )
-    }
+    Image(
+        modifier = Modifier.size(50.dp),
+        painter = painterResource(R.drawable.instagram_1_svgrepo_com),
+        contentDescription = "App icon"
+    )
 }
 
 @Composable
-private fun InstagramTopColumn(value: String, description: String) {
+private fun InstagramTopColumn(value: String, title: String) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .border(width = 1.dp, Color.DarkGray),
-        ) {
-            Text(value)
-        }
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .border(width = 1.dp, Color.DarkGray)
-        ) {
-            Text(description)
-        }
+        Text(
+            text = value,
+            fontSize = 32.sp,
+            fontFamily = FontFamily.Cursive
+        )
+
+        Text(
+            text = title,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold
+        )
+
     }
 
 }

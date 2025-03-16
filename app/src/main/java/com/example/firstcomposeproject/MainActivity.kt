@@ -18,8 +18,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.firstcomposeproject.ui.theme.FirstComposeProjectTheme
 import com.example.firstcomposeproject.ui.theme.InstagramHeadContainer
 
@@ -34,7 +42,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.background)
-                // Чтобы весь экран настраивал тот цвет, который соответствует теме
+                    // Чтобы весь экран настраивал тот цвет, который соответствует теме
                 ) {
 
                 }
@@ -42,4 +50,22 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+
+@Preview
+@Composable
+fun TestText() {
+    Text(buildAnnotatedString {
+        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+            append("Hi")
+        }
+
+        withStyle(SpanStyle(textDecoration = TextDecoration.Underline)) {
+            append(" ")
+        }
+
+        append("Man")
+        append("!")
+    })
 }
