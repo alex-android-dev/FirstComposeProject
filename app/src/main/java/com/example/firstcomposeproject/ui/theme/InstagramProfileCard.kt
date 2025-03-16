@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +28,6 @@ const val postsName = "Posts"
 const val followersName = "Followers"
 const val followingName = "Following"
 
-@Preview
 @Composable
 fun InstagramHeadContainer() {
     val posts = "6.950"
@@ -39,11 +41,19 @@ fun InstagramHeadContainer() {
 fun InstagramCard(posts: String, followers: String, following: String) {
 
     Card(
+        modifier = Modifier.padding(
+            horizontal = 8.dp,
+            vertical = 20.dp
+        ),
         shape = RoundedCornerShape(
             topStart = 4.dp,
             topEnd = 4.dp,
         ),
-        border = BorderStroke(1.dp, Color.Black)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+        )
     ) {
         InstagramHead(posts, followers, following)
     }
@@ -106,3 +116,24 @@ private fun InstagramTopColumn(value: String, description: String) {
     }
 
 }
+
+@Preview
+@Composable
+fun PreviewCardLight() {
+    FirstComposeProjectTheme(
+        darkTheme = false
+    ) {
+        InstagramHeadContainer()
+    }
+}
+
+@Preview
+@Composable
+fun PreviewCardDark() {
+    FirstComposeProjectTheme(
+        darkTheme = true
+    ) {
+        InstagramHeadContainer()
+    }
+}
+
