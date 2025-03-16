@@ -2,17 +2,14 @@ package com.example.firstcomposeproject.ui.theme
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,9 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,13 +55,13 @@ fun InstagramCard(posts: String, followers: String, following: String) {
             contentColor = MaterialTheme.colorScheme.onBackground,
         )
     ) {
-        InstagramHead(posts, followers, following)
+        UserStatistics(posts, followers, following)
     }
 }
 
 
 @Composable
-fun InstagramHead(posts: String, followers: String, following: String) {
+fun UserStatistics(posts: String, followers: String, following: String) {
     val postsName = "Posts"
     val followersName = "Followers"
     val followingName = "Following"
@@ -86,6 +81,11 @@ fun InstagramHead(posts: String, followers: String, following: String) {
 @Composable
 private fun InstagramLogo() {
     Image(
+        modifier = Modifier.size(50.dp),
+        painter = painterResource(R.drawable.instagram_1_svgrepo_com),
+        contentDescription = "App icon"
+    )
+    Image(
         modifier = Modifier
             .size(35.dp)
             .clip(CircleShape)
@@ -102,21 +102,19 @@ private fun InstagramTopColumn(value: String, description: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .border(width = 1.dp, Color.DarkGray),
-        ) {
-            Text(value)
-        }
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .border(width = 1.dp, Color.DarkGray)
-        ) {
-            Text(description)
-        }
+        Text(
+            text = value,
+            fontSize = 32.sp,
+            fontFamily = FontFamily.Cursive
+        )
+
+        Text(
+            text = title,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold
+        )
+
     }
 
 }
