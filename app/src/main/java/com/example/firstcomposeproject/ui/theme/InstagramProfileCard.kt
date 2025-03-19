@@ -1,5 +1,6 @@
 package com.example.firstcomposeproject.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +21,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +34,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.firstcomposeproject.MainViewModel
 import com.example.firstcomposeproject.R
+import kotlinx.coroutines.launch
 
 const val postsName = "Posts"
 const val followersName = "Followers"
@@ -43,17 +48,22 @@ const val strFollow = "Follow"
 const val strUnfollow = "Unfollow"
 
 @Composable
-fun InstagramHeadContainer() {
+fun InstagramHeadContainer(viewModel: MainViewModel) {
     val posts = "6.950"
     val followers = "436M"
     val following = "76"
 
-    InstagramCard(posts, followers, following)
+    InstagramCard(posts, followers, following, viewModel)
 }
 
+@SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
 @Composable
-fun InstagramCard(posts: String, followers: String, following: String) {
-
+fun InstagramCard(
+    posts: String,
+    followers: String,
+    following: String,
+    viewModel: MainViewModel,
+) {
     Card(
         modifier = Modifier.padding(
             horizontal = 8.dp,
@@ -69,14 +79,42 @@ fun InstagramCard(posts: String, followers: String, following: String) {
             contentColor = MaterialTheme.colorScheme.onBackground,
         )
     ) {
-        UserStatistics(posts, followers, following)
+        Content(posts, followers, following)
+
+        Column(
+            modifier = Modifier.padding(start = 10.dp)
+        ) {
+            Text(
+                fontFamily = FontFamily.Cursive,
+                fontSize = 30.sp,
+                text = instagramName,
+            )
+
+            Text(
+                modifier = Modifier.height(20.dp),
+                fontSize = 10.sp,
+                text = hashtagName,
+            )
+
+            Text(
+                modifier = Modifier.height(20.dp),
+                fontSize = 10.sp,
+                text = urlName,
+            )
+
+            ButtonFollow(
+                buttonStatus = viewModel.state.collectAsState().value
+            ) {
+                viewModel.changeState()
+            }
+        }
+
     }
 }
 
 
 @Composable
-fun UserStatistics(posts: String, followers: String, following: String) {
-    val buttonStatus = rememberSaveable { mutableStateOf(true) }
+fun Content(posts: String, followers: String, following: String) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -88,34 +126,6 @@ fun UserStatistics(posts: String, followers: String, following: String) {
         InstagramTopColumn(posts, postsName)
         InstagramTopColumn(followers, followersName)
         InstagramTopColumn(following, followingName)
-    }
-    Column(
-        modifier = Modifier.padding(start = 10.dp)
-    ) {
-        Text(
-            fontFamily = FontFamily.Cursive,
-            fontSize = 30.sp,
-            text = instagramName,
-        )
-
-        Text(
-            modifier = Modifier.height(20.dp),
-            fontSize = 10.sp,
-            text = hashtagName,
-        )
-
-        Text(
-            modifier = Modifier.height(20.dp),
-            fontSize = 10.sp,
-            text = urlName,
-        )
-
-        ButtonFollow(
-            buttonStatus = buttonStatus.value
-        ) {
-            buttonStatus.value = !buttonStatus.value
-        }
-
     }
 }
 
