@@ -6,6 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -61,11 +63,12 @@ private fun MainViewLazyColumn(viewModel: MainViewModel) {
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         state = lazyListState,
     ) {
-
         items(
             items = models.value,
             key = { it.id },
         ) { model ->
+
+            Log.d("MainActivity", "value size: ${models.value.size}")
 
             val dismissThresholds = with(receiver = LocalDensity.current) {
                 LocalConfiguration.current.screenWidthDp.dp.toPx() * 0.80f
@@ -79,6 +82,7 @@ private fun MainViewLazyColumn(viewModel: MainViewModel) {
                     return@rememberSwipeToDismissBoxState true
                 }
             ) // State для удаления свайпа
+
 
 
             SwipeToDismissBox(
@@ -114,4 +118,5 @@ private fun MainViewLazyColumn(viewModel: MainViewModel) {
 
         }
     }
+
 }

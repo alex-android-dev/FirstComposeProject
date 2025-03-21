@@ -21,23 +21,26 @@ class MainViewModel : ViewModel() {
     }
 
     private val _models = MutableLiveData<List<InstagramModel>>(_initialList)
-    val models : LiveData<List<InstagramModel>> = _models
+    val models: LiveData<List<InstagramModel>> = _models
 
     fun changeFollowingStatus(model: InstagramModel) {
-        _models.value = _models.value?.map { currentItem ->
-            if (currentItem == model) {
-                currentItem.copy(isFollowed = !currentItem.isFollowed)
+        val list = _models.value?.toMutableList() ?: mutableListOf()
+
+        list.replaceAll { it ->
+            if (it.id == model.id) {
+                it.copy(isFollowed = !it.isFollowed)
             } else {
-                currentItem
+                it
             }
         }
+
+        _models.value = list
     }
 
     fun delete(model: InstagramModel) {
-
-        _models.value = (_models.value as MutableList<InstagramModel>).apply {
-            remove(model)
-        }
+        val list = _models.value?.toMutableList() ?: mutableListOf()
+        list.remove(model)
+        _models.value = list
 
         Log.d("MainActivity", "item ${model.id} deleted")
         Log.d("MainActivity", "size of models: ${_models.value?.size}")
