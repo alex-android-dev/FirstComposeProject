@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -79,10 +80,12 @@ private fun MainViewLazyColumn(viewModel: MainViewModel) {
                 }
             ) // State для удаления свайпа
 
-            SwipeToDismiss(
+
+            SwipeToDismissBox(
                 state = dismissState,
-                directions = setOf(SwipeToDismissBoxValue.EndToStart), // устанавливаем направление
-                background = {
+                enableDismissFromEndToStart = true,
+                enableDismissFromStartToEnd = false,
+                backgroundContent = {
                     Box(
                         modifier = Modifier
                             .padding(20.dp)
@@ -97,16 +100,16 @@ private fun MainViewLazyColumn(viewModel: MainViewModel) {
                         )
                     }
                 },
-                dismissContent = {
-                    InstagramHeadContainer(
-                        instagramModel = model,
-                        onFollowClickListener = {
-                            Log.d("MainActivity", "onFollowClickListener")
-                            viewModel.changeFollowingStatus(model)
-                        }
-                    )
-                },
             )
+            {
+                InstagramHeadContainer(
+                    instagramModel = model,
+                    onFollowClickListener = {
+                        Log.d("MainActivity", "onFollowClickListener")
+                        viewModel.changeFollowingStatus(model)
+                    }
+                )
+            }
 
 
         }
