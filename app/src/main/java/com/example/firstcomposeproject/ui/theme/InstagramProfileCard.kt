@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.firstcomposeproject.InstagramModel
 import com.example.firstcomposeproject.MainViewModel
 import com.example.firstcomposeproject.R
 import kotlinx.coroutines.launch
@@ -41,19 +42,22 @@ import kotlinx.coroutines.launch
 const val postsName = "Posts"
 const val followersName = "Followers"
 const val followingName = "Following"
-const val instagramName = "Instagram"
-const val hashtagName = "#YoursToMake"
 const val urlName = "www.facebook.com/emotional_health"
 const val strFollow = "Follow"
 const val strUnfollow = "Unfollow"
 
 @Composable
-fun InstagramHeadContainer(viewModel: MainViewModel) {
+fun InstagramHeadContainer(
+    instagramModel: InstagramModel,
+    onFollowClickListener: (InstagramModel) -> Unit,
+) {
     val posts = "6.950"
     val followers = "436M"
     val following = "76"
 
-    InstagramCard(posts, followers, following, viewModel)
+    InstagramCard(posts, followers, following, instagramModel) {
+        onFollowClickListener(instagramModel)
+    }
 }
 
 @SuppressLint("StateFlowValueCalledInComposition", "CoroutineCreationDuringComposition")
@@ -62,7 +66,8 @@ fun InstagramCard(
     posts: String,
     followers: String,
     following: String,
-    viewModel: MainViewModel,
+    instagramModel: InstagramModel,
+    onFollowClickListener: () -> Unit,
 ) {
     Card(
         modifier = Modifier.padding(
@@ -87,13 +92,13 @@ fun InstagramCard(
             Text(
                 fontFamily = FontFamily.Cursive,
                 fontSize = 30.sp,
-                text = instagramName,
+                text = "$followingName ${instagramModel.id}",
             )
 
             Text(
                 modifier = Modifier.height(20.dp),
                 fontSize = 10.sp,
-                text = hashtagName,
+                text = instagramModel.title,
             )
 
             Text(
@@ -103,9 +108,9 @@ fun InstagramCard(
             )
 
             ButtonFollow(
-                buttonStatus = viewModel.state.collectAsState().value
+                buttonStatus = instagramModel.isFollowed,
             ) {
-                viewModel.changeState()
+                onFollowClickListener()
             }
         }
 
